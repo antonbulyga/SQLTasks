@@ -1,46 +1,46 @@
-drop schema if exists employee_table cascade;
-create SCHEMA IF NOT EXISTS employee_table;
-SET SCHEMA 'employee_table';
 
-create TABLE IF NOT EXISTS employee_table.departments
+drop schema if exists students_table cascade;
+create SCHEMA IF NOT EXISTS students_table;
+SET SCHEMA 'students_table';
+
+create TABLE IF NOT EXISTS students_table.disciplines
 (
     id   SERIAL    NOT NULL,
     name VARCHAR(150) NOT NULL,
     PRIMARY KEY (id)
 );
 
-create TABLE IF NOT EXISTS employee_table.employees
+create TABLE IF NOT EXISTS students_table.students
 (
-    id                    SERIAL    NOT NULL,
-    name                  VARCHAR(150) NOT NULL,
-    salary                FLOAT NOT NULL,
-    department_id         INT NOT NULL,
+    id                     SERIAL    NOT NULL,
+    name                   VARCHAR(150) NOT NULL,
+    age                    INT NOT NULL,
+    disciplines_id         INT NOT NULL,
     PRIMARY KEY (id),
-    foreign key (department_id) references departments (id) on delete cascade
+    foreign key (disciplines_id) references disciplines (id) on delete cascade
 );
 
 
-insert into employee_table.departments (name)
-values ('Java'),
-       ('JS');
+insert into students_table.disciplines (name)
+values ('psychology'),
+       ('medicine');
 
-insert into employee_table.employees (name, salary ,department_id)
-values ('Joe', 70000, 1),
-       ('Jack', 90000, 1),
-       ('Andrew', 80000,2),
-       ('Max',60000, 2),
-       ('Anton',90000,1);
+insert into students_table.students (name, age ,disciplines_id)
+values ('Anna', 18, 1),
+       ('Helen', 19, 1),
+       ('Andrew', 21,2),
+       ('Max',20, 2),
+       ('Anton',19,1);
 
+/*Task 1: Show the oldest student in each discipline*/
 
-/*Task 2:  Write a query to find the highest salary in each department.*/
-
-/*Answer:*/
-/*SELECT d.name, e.name, salary
-FROM employees e
-         JOIN departments d
-              ON d.id = e.department_id
-WHERE salary IN (SELECT max(salary)
-                 FROM employees
-                 GROUP BY department_id); */
+/*SELECT d.name, s.name, age
+FROM students s
+         JOIN disciplines d
+              ON d.id = s.disciplines_id
+WHERE age IN (SELECT max(age)
+              FROM students
+              GROUP BY disciplines_id)
+order by s.name;*/
 
 
