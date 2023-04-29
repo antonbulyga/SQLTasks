@@ -32,15 +32,12 @@ values ('Anna', 18, 1),
        ('Max',20, 2),
        ('Anton',19,1);
 
-/*Task 1: Show the oldest student in each discipline*/
+/*Task 1: Show the list of all students with additional colum (age) where we can see max age
+of the students partitioned by discipline*/
 
-/*SELECT d.name, s.name, age
-FROM students s
-         JOIN disciplines d
-              ON d.id = s.disciplines_id
-WHERE age IN (SELECT max(age)
-              FROM students
-              GROUP BY disciplines_id)
-order by s.name;*/
+/*select d.name as discipline, s.name as student, max(age) over (partition by d.name) as age
+from students s
+         join students_table.disciplines d on d.id = s.disciplines_id
+order by d.name;*/
 
 
